@@ -24,21 +24,25 @@ export default function App() {
       if (nameRegister === "" && emailRegister === "" && passwordRegister === "" && phoneNumberRegister === "") {
         window.alert("Insira as informações!!!");
       } else {
-        axios.post("http://localhost:8080/register", {
-          name: nameRegister,
-          email: emailRegister,
-          password: passwordRegister,
-          phoneNumber: phoneNumberRegister,
-        });
+        axios
+          .post("https://api-para-tela-de-login-com-uso-de-api.vercel.app/register", {
+            name: nameRegister,
+            email: emailRegister,
+            password: passwordRegister,
+            phoneNumber: phoneNumberRegister,
+          })
+          .then((response) => console.log(response.data));
       }
     } else if (section === true) {
       if (emailLogin === "" && passwordLogin === "") {
         window.alert("Insira as informações!!!");
       } else {
-        axios.post("http://localhost:8080/login", {
-          email: emailLogin,
-          password: passwordLogin,
-        });
+        axios
+          .post("https://api-para-tela-de-login-com-uso-de-api.vercel.app/login", {
+            email: emailLogin,
+            password: passwordLogin,
+          })
+          .then((response) => console.log(response.data));
       }
     }
   }
