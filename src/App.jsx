@@ -25,7 +25,7 @@ export default function App() {
         window.alert("Insira as informações!!!");
       } else {
         axios
-          .post("https://api-para-tela-de-login-com-uso-de-api.vercel.app/register", {
+          .post("https://localhost:8080/register", {
             name: nameRegister,
             email: emailRegister,
             password: passwordRegister,
@@ -38,7 +38,7 @@ export default function App() {
         window.alert("Insira as informações!!!");
       } else {
         axios
-          .post("https://api-para-tela-de-login-com-uso-de-api.vercel.app/login", {
+          .post("https://localhost:8080/login", {
             email: emailLogin,
             password: passwordLogin,
           })
