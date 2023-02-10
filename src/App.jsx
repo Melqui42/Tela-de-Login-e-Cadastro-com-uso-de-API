@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 
 import { IoMdClose } from "react-icons/io";
@@ -10,9 +11,35 @@ export default function App() {
   const checkbox = React.useRef(false);
   const [section, setSection] = React.useState(false);
 
+  const [nameRegister, setNameRegister] = React.useState("");
+  const [emailRegister, setEmailRegister] = React.useState("");
+  const [passwordRegister, setPasswordRegister] = React.useState("");
+  const [phoneNumberRegister, setPhoneNumberRegister] = React.useState("");
+
+  const [emailLogin, setEmailLogin] = React.useState("");
+  const [passwordLogin, setPasswordLogin] = React.useState("");
+
   function handleCreateCount() {
     if (section === false && checkbox.current === true) {
+      if (nameRegister === "" && emailRegister === "" && passwordRegister === "" && phoneNumberRegister === "") {
+        window.alert("Insira as informações!!!");
+      } else {
+        axios.post("http://localhost:8080/register", {
+          name: nameRegister,
+          email: emailRegister,
+          password: passwordRegister,
+          phoneNumber: phoneNumberRegister,
+        });
+      }
     } else if (section === true) {
+      if (emailLogin === "" && passwordLogin === "") {
+        window.alert("Insira as informações!!!");
+      } else {
+        axios.post("http://localhost:8080/login", {
+          email: emailLogin,
+          password: passwordLogin,
+        });
+      }
     }
   }
 
@@ -46,35 +73,75 @@ export default function App() {
             </ul>
           )}
         </div>
-        {!section ? (
-          <div className="ContentUser">
-            <input type="number" name="" placeholder="+99 99 9999-9999" />
-            <input type="email" name="" placeholder="Insira um email" />
-            <input type="password" name="" placeholder="Insira uma senha" />
-            <label htmlFor="">
+        <div>
+          {!section ? (
+            <div className="ContentUser">
               <input
-                type="checkbox"
+                type="number"
                 name=""
-                id=""
-                className="checkbox"
-                onClick={() => {
-                  checkbox.current ? (checkbox.current = false) : (checkbox.current = true);
-                }}
+                placeholder="+99 99 9999-9999"
+                value={phoneNumberRegister}
+                onChange={(e) => setPhoneNumberRegister(e.target.value)}
               />
-              <p>
-                Li e concordo com <span>os termos de uso do site.</span>
-              </p>
-            </label>
-          </div>
-        ) : (
-          <div className="ContentUser">
-            <input type="email" name="" placeholder="Insira um email" />
-            <input type="password" name="" placeholder="Insira uma senha" />
-          </div>
-        )}
-        <button className="Button" onClick={handleCreateCount}>
-          {!section ? "Registre-se" : "Entrar"}
-        </button>
+              <input
+                type="text"
+                name=""
+                placeholder="Insira um nome"
+                value={nameRegister}
+                onChange={(e) => setNameRegister(e.target.value)}
+              />
+              <input
+                type="email"
+                name=""
+                placeholder="Insira um email"
+                value={emailRegister}
+                onChange={(e) => setEmailRegister(e.target.value)}
+              />
+              <input
+                type="password"
+                name=""
+                placeholder="Insira uma senha"
+                value={passwordRegister}
+                onChange={(e) => setPasswordRegister(e.target.value)}
+              />
+              <label htmlFor="">
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  className="checkbox"
+                  onClick={() => {
+                    checkbox.current ? (checkbox.current = false) : (checkbox.current = true);
+                  }}
+                />
+                <p>
+                  Li e concordo com <span>os termos de uso do site.</span>
+                </p>
+              </label>
+            </div>
+          ) : (
+            <div className="ContentUser">
+              <input
+                type="email"
+                name=""
+                placeholder="Insira um email"
+                value={emailLogin}
+                onChange={(e) => setEmailLogin(e.target.value)}
+              />
+              <input
+                type="password"
+                name=""
+                placeholder="Insira uma senha"
+                value={passwordLogin}
+                onChange={(e) => setPasswordLogin(e.target.value)}
+              />
+            </div>
+          )}
+          <button type="submit" className="Button" onClick={handleCreateCount}>
+            {!section ? "Registre-se" : "Entrar"}
+          </button>
+        </div>
+
         {!section ? (
           <p>
             Já tem uma conta? <button onClick={() => setSection(!section)}>Login</button>
